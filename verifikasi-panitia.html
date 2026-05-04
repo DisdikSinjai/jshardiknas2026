@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Verifikasi Panitia — Jalan Sehat Hardiknas 2026</title>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f5fb;min-height:100vh}
+.hero{background:linear-gradient(135deg,#185fa5,#378add);padding:1.25rem 1.5rem;color:#fff}
+.hero h1{font-size:18px;font-weight:800;margin-bottom:2px}
+.hero p{font-size:12px;opacity:.85}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
+.stat{background:#fff;border-radius:10px;padding:10px;text-align:center;border:1px solid #b5d4f4}
+.stat-num{font-size:20px;font-weight:800;display:block}
+.stat-lbl{font-size:10px;color:#378add;font-weight:600}
+.card{background:#fff;border-radius:14px;margin:0 12px 12px;padding:1.25rem;border:1px solid #b5d4f4}
+.card-title{font-size:13px;font-weight:700;color:#185fa5;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ic{width:26px;height:26px;border-radius:50%;background:#e6f1fb;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+
+/* SCAN AREA */
+#qr-reader{width:100%;border-radius:10px;overflow:hidden;margin-bottom:10px}
+#qr-reader video{border-radius:10px}
+.scan-btn{width:100%;padding:14px;background:linear-gradient(135deg,#185fa5,#378add);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px}
+.stop-btn{width:100%;padding:10px;background:#fff;color:#e24b4a;border:1px solid #e24b4a;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px;display:none}
+.scan-info{background:#e6f1fb;border-radius:8px;padding:10px 14px;font-size:12px;color:#0c447c;text-align:center;margin-bottom:8px;display:none}
+
+/* RESULT */
+.result-box{border-radius:12px;padding:14px 16px;margin-bottom:12px;display:none}
+.result-box.valid{background:#eaf3de;border:1px solid #97c459;display:block}
+.result-box.invalid{background:#fcebeb;border:1px solid #f09595;display:block}
+.result-box.used{background:#e6f1fb;border:1px solid #85b7eb;display:block}
+.result-title{font-size:16px;font-weight:800;margin-bottom:10px}
+.result-title.valid{color:#27500a}
+.result-title.invalid{color:#791f1f}
+.result-title.used{color:#0c447c}
+.result-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px}
+.result-row:last-child{border-bottom:none}
+.result-row span:first-child{color:#378add;font-weight:600}
+.result-row span:last-child{font-weight:700;color:#1a1a2e}
+.mark-btn{width:100%;padding:13px;background:#2d8a45;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px;display:none}
+.mark-btn:disabled{opacity:.6}
+
+/* MANUAL INPUT */
+.manual-wrap{display:flex;gap:8px}
+.manual-input{flex:1;padding:10px 12px;border:1px solid #b5d4f4;border-radius:8px;font-size:13px;font-family:monospace;outline:none;background:#fff;color:#1a1a2e;text-transform:uppercase}
+.manual-input:focus{border-color:#378add}
+.cek-btn{padding:10px 18px;background:#185fa5;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+
+/* HISTORY */
+.hist-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #e6f1fb;font-size:12px}
+.hist-item:last-child{border-bottom:none}
+.hist-nama{font-weight:700;color:#185fa5}
+.hist-kec{font-weight:400;color:#378add;font-size:11px}
+.hist-time{color:#85b7eb;font-family:monospace;font-size:11px}
+.empty{text-align:center;padding:1.5rem;color:#85b7eb;font-size:13px}
+
+/* LOGIN */
+.login-screen{position:fixed;top:0;left:0;right:0;bottom:0;background:#f0f5fb;display:flex;align-items:center;justify-content:center;z-index:999;padding:1rem}
+.login-box{background:#fff;border-radius:16px;padding:2rem;max-width:360px;width:100%;border:1px solid #b5d4f4;text-align:center}
+.login-box h2{color:#185fa5;font-size:20px;font-weight:800;margin-bottom:6px}
+.login-box p{color:#378add;font-size:13px;margin-bottom:1.5rem}
+.login-input{width:100%;padding:12px;border:1px solid #b5d4f4;border-radius:10px;font-size:15px;text-align:center;outline:none;font-family:inherit;margin-bottom:12px;letter-spacing:2px}
+.login-input:focus{border-color:#185fa5}
+.login-btn{width:100%;padding:13px;background:linear-gradient(135deg,#185fa5,#378add);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.login-err{color:#e24b4a;font-size:13px;margin-top:8px;display:none}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div style="font-size:48px;margin-bottom:12px">🔒</div>
+    <h2>Verifikasi Panitia</h2>
+    <p>Jalan Sehat Hardiknas 2026<br>Dinas Pendidikan Kab. Sinjai</p>
+    <input type="password" class="login-input" id="login-pw" placeholder="Masukkan password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">🔓 Masuk</button>
+    <div class="login-err" id="login-err">❌ Password salah! Coba lagi.</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="main-app" style="display:none">
+  <div class="hero">
+    <h1>✅ Verifikasi Panitia</h1>
+    <p>Jalan Sehat Hardiknas 2026 — Kab. Sinjai</p>
+  </div>
+
+  <div class="stats" id="stats-area">
+    <div class="stat"><span class="stat-num" id="s-total" style="color:#185fa5">0</span><span class="stat-lbl">Total Peserta</span></div>
+    <div class="stat"><span class="stat-num" id="s-sudah" style="color:#2d8a45">0</span><span class="stat-lbl">Sudah Tukar</span></div>
+    <div class="stat"><span class="stat-num" id="s-belum" style="color:#ba7517">0</span><span class="stat-lbl">Belum Tukar</span></div>
+  </div>
+
+  <!-- SCAN -->
+  <div class="card">
+    <div class="card-title"><span class="ic">📷</span> Scan QR Code Peserta</div>
+    <div id="qr-reader"></div>
+    <button class="scan-btn" id="scan-btn" onclick="startScan()">📷 Mulai Scan QR Code</button>
+    <button class="stop-btn" id="stop-btn" onclick="stopScan()">⏹ Hentikan Kamera</button>
+    <div class="scan-info" id="scan-info">Arahkan kamera ke QR Code peserta...</div>
+
+    <!-- RESULT -->
+    <div class="result-box" id="result-box">
+      <div class="result-title" id="result-title"></div>
+      <div id="result-detail"></div>
+      <button class="mark-btn" id="mark-btn" onclick="markUsed()">✅ Tukar Kupon — Tandai Selesai</button>
+    </div>
+  </div>
+
+  <!-- MANUAL -->
+  <div class="card">
+    <div class="card-title"><span class="ic">⌨️</span> Input Kode Manual</div>
+    <div class="manual-wrap">
+      <input type="text" class="manual-input" id="manual-kode" placeholder="HDS-XXX-00000-XXXX" onkeydown="if(event.key==='Enter')cekManual()">
+      <button class="cek-btn" onclick="cekManual()">CEK</button>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="card">
+    <div class="card-title"><span class="ic">📋</span> Riwayat Verifikasi</div>
+    <div id="history-list" class="empty">Belum ada verifikasi.</div>
+  </div>
+</div>
+
+<script>
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXxHAazUn8mb6CKq3JJ4bqWhUDvu03foh4Y5XI_4Y0-7zLzjES34CnGFP8D8KaqkCTqQ/exec";
+var PASSWORD = "sinjai2026";
+var html5QrCode = null;
+var scanning = false;
+var currentKode = null;
+var history = [];
+
+// LOGIN
+function doLogin() {
+  var pw = document.getElementById("login-pw").value;
+  if (pw === PASSWORD) {
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("main-app").style.display = "block";
+    fetchStats();
+  } else {
+    document.getElementById("login-err").style.display = "block";
+    document.getElementById("login-pw").value = "";
+  }
+}
+
+document.getElementById("login-pw").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") doLogin();
+});
+
+// STATS
+function fetchStats() {
+  fetch(SCRIPT_URL + "?action=stats")
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.success) {
+        document.getElementById("s-total").textContent = d.total;
+        document.getElementById("s-sudah").textContent = d.sudahTukar;
+        document.getElementById("s-belum").textContent = d.total - d.sudahTukar;
+      }
+    }).catch(function() {});
+}
+
+// SCAN
+function startScan() {
+  document.getElementById("scan-btn").style.display = "none";
+  document.getElementById("stop-btn").style.display = "block";
+  document.getElementById("scan-info").style.display = "block";
+  document.getElementById("result-box").className = "result-box";
+  currentKode = null;
+
+  html5QrCode = new Html5Qrcode("qr-reader");
+  Html5Qrcode.getCameras().then(function(cameras) {
+    if (!cameras || cameras.length === 0) {
+      showScanError("Tidak ada kamera ditemukan.");
+      return;
+    }
+    var camId = cameras[cameras.length - 1].id;
+    html5QrCode.start(
+      camId,
+      { fps: 15, qrbox: { width: 260, height: 260 } },
+      function(decodedText) {
+        stopScan();
+        prosesKode(decodedText.trim().toUpperCase());
+      },
+      function() {}
+    ).then(function() {
+      scanning = true;
+      document.getElementById("scan-info").textContent = "📷 Arahkan ke QR Code peserta...";
+    }).catch(function(err) {
+      showScanError("Gagal buka kamera: " + err);
+    });
+  }).catch(function(err) {
+    showScanError("Tidak bisa akses kamera: " + err);
+  });
+}
+
+function stopScan() {
+  if (html5QrCode && scanning) {
+    html5QrCode.stop().then(function() {
+      html5QrCode.clear();
+      html5QrCode = null;
+      scanning = false;
+    }).catch(function() {});
+  }
+  document.getElementById("scan-btn").style.display = "block";
+  document.getElementById("stop-btn").style.display = "none";
+  document.getElementById("scan-info").style.display = "none";
+  document.getElementById("qr-reader").innerHTML = "";
+}
+
+function showScanError(msg) {
+  document.getElementById("scan-info").textContent = "❌ " + msg;
+  document.getElementById("scan-info").style.background = "#fcebeb";
+  document.getElementById("scan-info").style.color = "#791f1f";
+  document.getElementById("scan-btn").style.display = "block";
+  document.getElementById("stop-btn").style.display = "none";
+}
+
+// MANUAL
+function cekManual() {
+  var kode = document.getElementById("manual-kode").value.trim().toUpperCase();
+  if (!kode) return;
+  prosesKode(kode);
+  document.getElementById("manual-kode").value = "";
+}
+
+// PROSES KODE
+function prosesKode(kode) {
+  currentKode = null;
+  var box = document.getElementById("result-box");
+  var title = document.getElementById("result-title");
+  var detail = document.getElementById("result-detail");
+  var markBtn = document.getElementById("mark-btn");
+
+  box.className = "result-box";
+  title.textContent = "⏳ Memeriksa kode...";
+  detail.innerHTML = "";
+  markBtn.style.display = "none";
+
+  fetch(SCRIPT_URL + "?action=verify&kode=" + encodeURIComponent(kode))
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (!d.success) {
+        box.className = "result-box invalid";
+        title.className = "result-title invalid";
+        title.textContent = "❌ Kode Tidak Ditemukan";
+        detail.innerHTML = "<div style='font-size:13px;color:#791f1f'>Kode tidak terdaftar dalam database. Periksa kembali.</div>";
+        markBtn.style.display = "none";
+      } else if (d.status === "Sudah Tukar") {
+        box.className = "result-box used";
+        title.className = "result-title used";
+        title.textContent = "ℹ️ Sudah Ditukar";
+        detail.innerHTML = buatDetail(d);
+        markBtn.style.display = "none";
+      } else {
+        box.className = "result-box valid";
+        title.className = "result-title valid";
+        title.textContent = "✅ VALID — Belum Tukar Kupon";
+        detail.innerHTML = buatDetail(d);
+        currentKode = kode;
+        markBtn.style.display = "block";
+        markBtn.disabled = false;
+        markBtn.textContent = "✅ Tukar Kupon — Tandai Selesai";
+      }
+      addHistory(d, d.status);
+    })
+    .catch(function() {
+      box.className = "result-box invalid";
+      title.className = "result-title invalid";
+      title.textContent = "❌ Gagal Terhubung";
+      detail.innerHTML = "<div style='font-size:13px;color:#791f1f'>Periksa koneksi internet dan coba lagi.</div>";
+    });
+}
+
+function buatDetail(d) {
+  return "<div class='result-row'><span>Nama</span><span>" + d.nama + "</span></div>" +
+    "<div class='result-row'><span>Jenis Kelamin</span><span>" + d.jk + "</span></div>" +
+    "<div class='result-row'><span>No. HP</span><span>" + d.hp + "</span></div>" +
+    "<div class='result-row'><span>Kecamatan</span><span>" + d.kec + "</span></div>" +
+    "<div class='result-row'><span>No. Urut</span><span style='font-family:monospace;color:#185fa5'>" + d.nomor + "</span></div>" +
+    "<div class='result-row'><span>Status</span><span>" + d.status + "</span></div>";
+}
+
+// MARK USED
+function markUsed() {
+  if (!currentKode) return;
+  var btn = document.getElementById("mark-btn");
+  btn.disabled = true;
+  btn.textContent = "Menyimpan...";
+  fetch(SCRIPT_URL + "?action=mark_used&kode=" + encodeURIComponent(currentKode))
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.success) {
+        document.getElementById("result-box").className = "result-box used";
+        document.getElementById("result-title").className = "result-title used";
+        document.getElementById("result-title").textContent = "✅ Kupon Berhasil Ditukar!";
+        btn.style.display = "none";
+        currentKode = null;
+        fetchStats();
+      }
+    })
+    .catch(function() { alert("Gagal menyimpan. Coba lagi."); })
+    .finally(function() {
+      btn.disabled = false;
+    });
+}
+
+// HISTORY
+function addHistory(d, status) {
+  if (!d.nama) return;
+  history.unshift({ nama: d.nama, kec: d.kec, status: status, waktu: new Date().toLocaleTimeString("id-ID") });
+  renderHistory();
+}
+
+function renderHistory() {
+  var el = document.getElementById("history-list");
+  if (!history.length) { el.innerHTML = "<div class='empty'>Belum ada verifikasi.</div>"; return; }
+  el.innerHTML = history.slice(0, 20).map(function(h) {
+    var warna = h.status === "Sudah Tukar" ? "#378add" : h.status === "Belum Tukar" ? "#27500a" : "#791f1f";
+    return "<div class='hist-item'>" +
+      "<div><span class='hist-nama'>" + h.nama + "</span> <span class='hist-kec'>(" + h.kec + ")</span></div>" +
+      "<div style='text-align:right'><div class='hist-time'>" + h.waktu + "</div>" +
+      "<div style='font-size:10px;color:" + warna + ";font-weight:700'>" + h.status + "</div></div>" +
+      "</div>";
+  }).join("");
+}
+</script>
+</body>
+</html>
