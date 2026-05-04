@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pendaftaran Jalan Sehat Hardiknas 2026 — Kab. Sinjai</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f5fb;min-height:100vh;padding:1.5rem 1rem}
+.app{max-width:680px;margin:0 auto}
+.nav{display:flex;border:1px solid #b5d4f4;border-radius:12px;overflow:hidden;margin-bottom:1.25rem;background:#e6f1fb}
+.nav-btn{flex:1;padding:11px 8px;background:transparent;border:none;font-size:13px;font-weight:700;color:#378add;cursor:pointer;border-right:1px solid #b5d4f4;font-family:inherit}
+.nav-btn:last-child{border-right:none}
+.nav-btn .nb{display:block;font-size:10px;font-weight:500;opacity:.75;margin-top:2px}
+.nav-btn.active{background:#fff;color:#185fa5}
+.page{display:none}.page.active{display:block}
+.hero-bar{background:linear-gradient(135deg,#185fa5 0%,#378add 60%,#5ba8f0 100%);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1rem;color:#fff;position:relative;overflow:hidden}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.35);margin-bottom:.6rem}
+.hero-bar h1{font-size:20px;font-weight:800;margin-bottom:4px}
+.hero-bar p{font-size:13px;opacity:.85}
+.hero-meta{display:flex;gap:1rem;margin-top:12px;flex-wrap:wrap}
+.hero-meta span{font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);padding:4px 10px;border-radius:20px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
+.stat-card{background:#fff;border:1px solid #b5d4f4;border-radius:10px;padding:12px 14px;text-align:center}
+.stat-num{font-size:22px;font-weight:800;display:block}
+.stat-lbl{font-size:11px;color:#378add;font-weight:600;margin-top:2px}
+.card{background:#fff;border:1px solid #b5d4f4;border-radius:14px;padding:1.35rem;margin-bottom:1rem}
+.card-title{font-size:14px;font-weight:700;color:#185fa5;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.card-title .ic{width:28px;height:28px;border-radius:50%;background:#e6f1fb;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:11px;font-weight:700;color:#378add;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.fg label .req{color:#e24b4a;margin-left:2px}
+.fg input,.fg select{width:100%;padding:9px 12px;border:1px solid #b5d4f4;border-radius:8px;font-size:13px;background:#fff;color:#1a1a2e;outline:none;font-family:inherit}
+.fg input:focus,.fg select:focus{border-color:#378add;box-shadow:0 0 0 3px rgba(55,138,221,.12)}
+.btn-submit{width:100%;padding:13px;background:linear-gradient(135deg,#185fa5,#378add);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed}
+.btn-sm{padding:6px 14px;border:1px solid #b5d4f4;border-radius:8px;background:#fff;color:#185fa5;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-sm.primary{background:#185fa5;color:#fff;border-color:#185fa5}
+.info-box{background:#e6f1fb;border:1px solid #85b7eb;border-radius:10px;padding:11px 15px;font-size:13px;color:#0c447c;margin-bottom:1rem;line-height:1.6}
+.err-box{background:#fcebeb;border:1px solid #f09595;border-radius:8px;padding:9px 14px;font-size:13px;color:#791f1f;margin-top:8px;display:none}
+.err-box.show{display:block}
+.ticket-wrap{display:none}.ticket-wrap.show{display:block}
+.ticket{background:#fff;border:1px solid #b5d4f4;border-radius:14px;overflow:hidden;margin-bottom:1rem}
+.t-head{background:linear-gradient(135deg,#185fa5,#378add);padding:18px 22px;display:flex;justify-content:space-between;align-items:center}
+.t-head-left h2{color:#fff;font-size:16px;font-weight:700;margin-bottom:3px}
+.t-head-left p{color:rgba(255,255,255,.82);font-size:12px}
+.t-badge{background:rgba(255,255,255,.22);color:#fff;font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.4);white-space:nowrap}
+.t-dash{border-top:2px dashed #b5d4f4;margin:0 18px;position:relative}
+.t-dash::before,.t-dash::after{content:'';position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:#f0f5fb;border:1px solid #b5d4f4}
+.t-dash::before{left:-18px}.t-dash::after{right:-18px}
+.t-body{padding:18px 22px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start}
+.t-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.tf label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#378add;display:block;margin-bottom:3px}
+.tf p{font-size:13px;font-weight:600;color:#1a1a2e}
+.t-qr{text-align:center;border-left:2px dashed #b5d4f4;padding-left:18px}
+.t-qr label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#378add;display:block;margin-bottom:8px}
+.kode-pill{font-family:monospace;font-size:10px;font-weight:700;background:#e6f1fb;color:#0c447c;padding:4px 8px;border-radius:6px;display:inline-block;margin-top:6px;border:1px solid #b5d4f4}
+.t-foot{background:#e6f1fb;padding:10px 22px;display:flex;justify-content:space-between;font-size:11px;color:#378add}
+.t-foot strong{color:#185fa5}
+.btn-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1rem}
+.btn-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
+.bx{padding:10px 12px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;border:none}
+.bx.blue{background:linear-gradient(135deg,#185fa5,#378add);color:#fff}
+.bx.outline{background:#fff;color:#185fa5;border:1px solid #b5d4f4}
+.bx.amber{background:#ba7517;color:#fff}
+.verify-box{background:#e6f1fb;border-radius:10px;padding:1rem;margin-bottom:1rem}
+.verify-input{display:flex;gap:8px;margin-bottom:.75rem}
+.verify-input input{flex:1;padding:9px 12px;border:1px solid #b5d4f4;border-radius:8px;font-size:13px;background:#fff;color:#1a1a2e;outline:none;font-family:monospace}
+.verify-result{display:none;border-radius:8px;padding:10px 14px;font-size:13px;font-weight:600;margin-top:.5rem}
+.verify-result.found{display:block;background:#eaf3de;color:#27500a;border:1px solid #97c459}
+.verify-result.notfound{display:block;background:#fcebeb;color:#791f1f;border:1px solid #f09595}
+.verify-result.used-ok{display:block;background:#e6f1fb;color:#0c447c;border:1px solid #85b7eb}
+.v-detail{background:#fff;border-radius:8px;padding:10px 14px;margin-top:8px;display:none;border:1px solid #b5d4f4}
+.v-detail.show{display:block}
+.v-detail-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #e6f1fb;font-size:12px}
+.v-detail-row:last-child{border-bottom:none}
+.v-detail-row span:first-child{color:#378add;font-weight:600}
+.v-detail-row span:last-child{color:#1a1a2e;font-weight:700}
+.empty-state{text-align:center;padding:2rem;color:#85b7eb;font-size:13px}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scan-box{position:relative;border-radius:10px;overflow:hidden;background:#000;margin-bottom:10px}
+.scan-box video{width:100%;display:block;border-radius:10px;max-height:300px;object-fit:cover}
+.scan-overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:180px;height:180px;border:3px solid #378add;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,0.45)}
+.scan-hint{position:absolute;bottom:12px;left:0;right:0;text-align:center;color:#fff;font-size:12px;font-weight:600}
+.settings-group{margin-bottom:1rem}
+.settings-group label{display:block;font-size:11px;font-weight:700;color:#378add;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.settings-group input{width:100%;padding:9px 12px;border:1px solid #b5d4f4;border-radius:8px;font-size:13px;background:#fff;color:#1a1a2e;outline:none;font-family:inherit}
+.srow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.conn-ok{display:inline-flex;align-items:center;gap:6px;background:#eaf3de;color:#27500a;border:1px solid #97c459;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;margin-top:8px}
+.conn-fail{display:inline-flex;align-items:center;gap:6px;background:#fcebeb;color:#791f1f;border:1px solid #f09595;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;margin-top:8px}
+.footer-brand{text-align:center;margin-top:1.5rem;font-size:11px;color:#85b7eb}
+@media(max-width:520px){
+  .frow,.t-body,.btn-row{grid-template-columns:1fr}
+  .t-qr{border-left:none;border-top:2px dashed #b5d4f4;padding-left:0;padding-top:14px}
+  .hero-bar h1{font-size:17px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showPage('daftar',this)">Daftar<span class="nb">Peserta</span></button>
+  <button class="nav-btn" onclick="aksesVerifikasi(this)">Verifikasi<span class="nb">Panitia</span></button>
+  <button class="nav-btn" onclick="aksesSettings(this)">Pengaturan<span class="nb">Admin</span></button>
+</div>
+
+<!-- DAFTAR -->
+<div id="page-daftar" class="page active">
+  <div class="hero-bar">
+    <div class="hero-badge">Hari Pendidikan Nasional 2026</div>
+    <h1 id="ev-name-hero">Jalan Sehat Hardiknas 2026</h1>
+    <p id="ev-org-hero">Dinas Pendidikan Kabupaten Sinjai</p>
+    <div class="hero-meta">
+      <span>&#128197; <span id="ev-date-hero">09 Mei 2025</span></span>
+      <span>&#128336; <span id="ev-time-hero">06.00 WITA</span></span>
+      <span>&#128205; <span id="ev-loc-hero">Alun-Alun Sinjai</span></span>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><span class="stat-num" id="s-terdaftar" style="color:#185fa5">0</span><span class="stat-lbl">Terdaftar</span></div>
+    <div class="stat-card"><span class="stat-num" id="s-sisa" style="color:#ba7517">10.000</span><span class="stat-lbl">Sisa Kuota</span></div>
+    <div class="stat-card"><span class="stat-num" id="s-kuota" style="color:#378add">10.000</span><span class="stat-lbl">Total Kuota</span></div>
+  </div>
+  <div id="form-area">
+    <div class="info-box">Pendaftaran <strong>GRATIS</strong>. Setiap peserta mendapatkan <strong>QR Code unik</strong> yang ditukarkan ke panitia untuk memperoleh <strong>kupon undian berhadiah</strong>.</div>
+    <div class="card">
+      <div class="card-title"><span class="ic">&#128100;</span> Data Diri Peserta</div>
+      <div class="fg"><label>Nama Lengkap <span class="req">*</span></label><input type="text" id="f-nama" placeholder="Masukkan nama lengkap"></div>
+      <div class="frow">
+        <div class="fg"><label>No. Handphone <span class="req">*</span></label><input type="tel" id="f-hp" placeholder="08xx-xxxx-xxxx"></div>
+        <div class="fg"><label>Jenis Kelamin <span class="req">*</span></label>
+          <select id="f-jk"><option value="">-- Pilih --</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Usia</label><input type="number" id="f-usia" placeholder="Contoh: 25" min="1" max="100"></div>
+        <div class="fg"><label>Kecamatan <span class="req">*</span></label>
+          <select id="f-kec"><option value="">-- Pilih --</option><option>Sinjai Utara</option><option>Sinjai Timur</option><option>Sinjai Selatan</option><option>Sinjai Barat</option><option>Sinjai Tengah</option><option>Sinjai Borong</option><option>Bulupoddo</option><option>Pulau Sembilan</option><option>Tellulimpoe</option></select>
+        </div>
+      </div>
+      <div id="f-err" class="err-box">Harap isi semua kolom bertanda (*) terlebih dahulu.</div>
+      <button class="btn-submit" id="btn-daftar" onclick="daftar()"><span id="btn-text">Daftar Sekarang - Gratis!</span></button>
+    </div>
+  </div>
+  <div id="tiket-area" class="ticket-wrap">
+    <div class="info-box" style="background:#eaf3de;border-color:#97c459;color:#27500a;display:flex;align-items:center;gap:10px">
+      <span style="font-size:20px">&#9989;</span>
+      <span><strong>Pendaftaran berhasil!</strong> Simpan screenshot tiket ini.</span>
+    </div>
+    <div class="ticket">
+      <div class="t-head">
+        <div class="t-head-left"><h2 id="t-evname">Jalan Sehat Hardiknas 2026</h2><p id="t-evinfo">Alun-Alun Sinjai</p></div>
+        <div class="t-badge">TERDAFTAR</div>
+      </div>
+      <div class="t-dash"></div>
+      <div class="t-body">
+        <div class="t-grid">
+          <div class="tf"><label>Nama</label><p id="t-nama">-</p></div>
+          <div class="tf"><label>Jenis Kelamin</label><p id="t-jk">-</p></div>
+          <div class="tf"><label>No. HP</label><p id="t-hp">-</p></div>
+          <div class="tf"><label>Kecamatan</label><p id="t-kec">-</p></div>
+          <div class="tf"><label>Usia</label><p id="t-usia">-</p></div>
+          <div class="tf"><label>No. Urut</label><p id="t-nomor" style="color:#185fa5;font-family:monospace;font-size:12px;font-weight:700">-</p></div>
+        </div>
+        <div class="t-qr">
+          <label>QR Code</label>
+          <div id="qr-container" style="display:flex;justify-content:center;margin-bottom:8px"></div>
+          <div class="kode-pill" id="t-kode">-</div>
+        </div>
+      </div>
+      <div class="t-foot">
+        <span>Tunjukkan ke <strong>Panitia</strong> untuk kupon undian</span>
+        <span id="t-waktu"></span>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="bx outline" onclick="cetakTiket()">Cetak</button>
+      <button class="bx amber" onclick="bagikanWA()">WhatsApp</button>
+      <button class="bx blue" onclick="daftarLagi()">+ Daftar Lagi</button>
+    </div>
+  </div>
+</div>
+
+<!-- VERIFIKASI -->
+<div id="page-verifikasi" class="page">
+  <div class="hero-bar">
+    <div class="hero-badge">Panel Panitia</div>
+    <h1>Verifikasi Peserta</h1>
+    <p>Scan QR Code atau ketik kode unik peserta</p>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="ic">&#128247;</span> Scan QR Code Peserta</div>
+    <div id="qr-reader" style="width:100%;border-radius:10px;overflow:hidden;display:none"></div>
+    <div id="scan-btn-area">
+      <button class="btn-submit" onclick="startScan()">Buka Kamera dan Scan QR Code</button>
+    </div>
+    <div id="scan-status" style="display:none;margin-top:10px;background:#e6f1fb;border-radius:8px;padding:10px 14px;font-size:13px;color:#0c447c;text-align:center">Mendeteksi QR Code...</div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="ic">&#128269;</span> Atau Ketik Kode Manual</div>
+    <div class="verify-box">
+      <div class="verify-input">
+        <input type="text" id="v-kode" placeholder="Masukkan kode unik (HDS-...)..." onkeydown="if(event.key==='Enter')verifikasiKode()">
+        <button class="btn-sm primary" id="v-btn" onclick="verifikasiKode()">CEK</button>
+      </div>
+      <div id="v-result" class="verify-result"></div>
+      <div id="v-detail" class="v-detail"></div>
+      <div style="margin-top:10px;display:none" id="v-mark-wrap">
+        <button class="btn-sm primary" onclick="markUsed()" style="width:100%">Tandai Sudah Tukar Kupon</button>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#378add;margin-bottom:.5rem;font-weight:700;text-transform:uppercase">Riwayat Verifikasi</div>
+    <div id="v-history" class="empty-state">Belum ada verifikasi.</div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div id="page-settings" class="page">
+  <div class="hero-bar">
+    <div class="hero-badge">Admin</div>
+    <h1>Pengaturan</h1>
+    <p>Kelola koneksi dan informasi event</p>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="ic">&#128279;</span> Koneksi Google Sheets</div>
+    <div class="settings-group">
+      <label>URL Google Apps Script</label>
+      <input type="text" id="cfg-url" placeholder="https://script.google.com/macros/s/...">
+    </div>
+    <div id="conn-status"></div>
+    <div style="margin-top:12px"><button class="btn-submit" onclick="saveAndTest()">Simpan dan Test Koneksi</button></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="ic">&#9881;</span> Informasi Event</div>
+    <div class="settings-group"><label>Nama Event</label><input type="text" id="cfg-name" value="Jalan Sehat Hardiknas 2026"></div>
+    <div class="settings-group"><label>Penyelenggara</label><input type="text" id="cfg-org" value="Dinas Pendidikan Kabupaten Sinjai"></div>
+    <div class="srow">
+      <div class="settings-group"><label>Tanggal</label><input type="date" id="cfg-date" value="2025-05-09"></div>
+      <div class="settings-group"><label>Jam Mulai</label><input type="time" id="cfg-time" value="06:00"></div>
+    </div>
+    <div class="settings-group"><label>Lokasi</label><input type="text" id="cfg-loc" value="Alun-Alun Sinjai"></div>
+    <div class="srow">
+      <div class="settings-group"><label>Total Kuota</label><input type="number" id="cfg-kuota" value="10000" min="1"></div>
+      <div class="settings-group"><label>Kode Prefix</label><input type="text" id="cfg-prefix" value="HDS" maxlength="4" style="font-family:monospace;text-transform:uppercase"></div>
+    </div>
+    <div class="btn-row2">
+      <button class="bx blue" onclick="saveAllSettings()">Simpan</button>
+      <button class="bx outline" onclick="resetSettings()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer-brand">Sistem Pendaftaran Digital - Jalan Sehat Hardiknas 2026 - Kab. Sinjai</div>
+</div>
+
+<script>
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXxHAazUn8mb6CKq3JJ4bqWhUDvu03foh4Y5XI_4Y0-7zLzjES34CnGFP8D8KaqkCTqQ/exec";
+var PASS_PANITIA = "sinjai2026";
+var PASS_ADMIN = "admin2026";
+var vHistory = [];
+var currentVerifyKode = null;
+var scanStream = null;
+var scanInterval = null;
+var CFG = {
+  name: "Jalan Sehat Hardiknas 2026",
+  org: "Dinas Pendidikan Kabupaten Sinjai",
+  date: "2025-05-09",
+  time: "06:00",
+  loc: "Alun-Alun Sinjai",
+  kuota: 10000,
+  prefix: "HDS"
+};
+
+window.onload = function() {
+  applySettings();
+  fetchStats();
+  document.getElementById("cfg-url").value = SCRIPT_URL;
+};
+
+function showPage(id, btn) {
+  document.querySelectorAll(".page").forEach(function(p) { p.classList.remove("active"); });
+  document.querySelectorAll(".nav-btn").forEach(function(b) { b.classList.remove("active"); });
+  document.getElementById("page-" + id).classList.add("active");
+  btn.classList.add("active");
+  stopScan();
+}
+
+function aksesVerifikasi(btn) {
+  var pw = prompt("Masukkan password panitia:");
+  if (pw === null) return;
+  if (pw === PASS_PANITIA || pw === PASS_ADMIN) {
+    showPage("verifikasi", btn);
+  } else {
+    alert("Password salah! Akses ditolak.");
+  }
+}
+
+function aksesSettings(btn) {
+  var pw = prompt("Masukkan password admin:");
+  if (pw === null) return;
+  if (pw === PASS_ADMIN) {
+    showPage("settings", btn);
+  } else {
+    alert("Password salah! Akses ditolak.");
+  }
+}
+
+function fetchStats() {
+  fetch(SCRIPT_URL + "?action=stats")
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.success) {
+        var t = d.total, k = CFG.kuota;
+        document.getElementById("s-terdaftar").textContent = t.toLocaleString("id-ID");
+        document.getElementById("s-sisa").textContent = Math.max(0, k - t).toLocaleString("id-ID");
+        document.getElementById("s-kuota").textContent = k.toLocaleString("id-ID");
+      }
+    })
+    .catch(function(e) { console.log("Stats error", e); });
+}
+
+function daftar() {
+  var nama = document.getElementById("f-nama").value.trim();
+  var hp = document.getElementById("f-hp").value.trim();
+  var jk = document.getElementById("f-jk").value;
+  var usia = document.getElementById("f-usia").value;
+  var kec = document.getElementById("f-kec").value;
+  var err = document.getElementById("f-err");
+  if (!nama || !hp || !jk || !kec) { err.classList.add("show"); return; }
+  err.classList.remove("show");
+  var btn = document.getElementById("btn-daftar");
+  var btnText = document.getElementById("btn-text");
+  btn.disabled = true;
+  btnText.innerHTML = '<span class="spinner"></span> Mendaftar...';
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify({ nama: nama, hp: hp, jk: jk, usia: usia, kec: kec, prefix: CFG.prefix })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (!data.success) {
+      err.textContent = data.message;
+      err.classList.add("show");
+    } else {
+      tampilTiket(nama, hp, jk, usia, kec, data.kode, data.nomor, data.waktu);
+      fetchStats();
+    }
+  })
+  .catch(function() {
+    err.textContent = "Gagal terhubung ke server. Coba lagi.";
+    err.classList.add("show");
+  })
+  .finally(function() {
+    btn.disabled = false;
+    btnText.textContent = "Daftar Sekarang - Gratis!";
+  });
+}
+
+function tampilTiket(nama, hp, jk, usia, kec, kode, nomor, waktu) {
+  document.getElementById("t-nama").textContent = nama;
+  document.getElementById("t-jk").textContent = jk === "L" ? "Laki-laki" : "Perempuan";
+  document.getElementById("t-hp").textContent = hp;
+  document.getElementById("t-kec").textContent = kec;
+  document.getElementById("t-usia").textContent = usia || "-";
+  document.getElementById("t-nomor").textContent = nomor;
+  document.getElementById("t-kode").textContent = kode;
+  document.getElementById("t-waktu").textContent = "Daftar: " + waktu;
+  document.getElementById("t-evname").textContent = CFG.name;
+  document.getElementById("t-evinfo").textContent = CFG.loc + " - " + formatDate(CFG.date) + ", " + CFG.time + " WITA";
+  var qrContainer = document.getElementById("qr-container");
+  qrContainer.innerHTML = "";
+  new QRCode(qrContainer, {
+    text: kode,
+    width: 160,
+    height: 160,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+  document.getElementById("form-area").style.display = "none";
+  document.getElementById("tiket-area").classList.add("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function daftarLagi() {
+  ["f-nama", "f-hp", "f-usia"].forEach(function(id) { document.getElementById(id).value = ""; });
+  document.getElementById("f-jk").value = "";
+  document.getElementById("f-kec").value = "";
+  document.getElementById("form-area").style.display = "block";
+  document.getElementById("tiket-area").classList.remove("show");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function startScan() {
+  document.getElementById("scan-area").style.display = "block";
+  document.getElementById("scan-btn-area").style.display = "none";
+  document.getElementById("scan-status").style.display = "block";
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+    .then(function(stream) {
+      scanStream = stream;
+      var video = document.getElementById("scan-video");
+      video.srcObject = stream;
+      video.play();
+      if (!window.jsQR) {
+        var s = document.createElement("script");
+        s.src = "https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js";
+        s.onload = startDetect;
+        document.head.appendChild(s);
+      } else {
+        startDetect();
+      }
+    })
+    .catch(function() {
+      var st = document.getElementById("scan-status");
+      st.textContent = "Kamera tidak bisa diakses. Pastikan izin kamera diaktifkan.";
+      st.style.background = "#fcebeb";
+      st.style.color = "#791f1f";
+    });
+}
+
+function startDetect() {
+  var video = document.getElementById("scan-video");
+  var canvas = document.getElementById("scan-canvas");
+  var ctx = canvas.getContext("2d");
+  scanInterval = setInterval(function() {
+    if (video.readyState === video.HAVE_ENOUGH_DATA && video.videoWidth > 0) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      try {
+        var img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        var code = jsQR(img.data, img.width, img.height, { inversionAttempts: "dontInvert" });
+        if (code && code.data) {
+          stopScan();
+          var kode = code.data.trim().toUpperCase();
+          document.getElementById("v-kode").value = kode;
+          document.getElementById("scan-status").textContent = "QR Code terdeteksi: " + kode;
+          verifikasiKode();
+        }
+      } catch(e) { console.log("Scan error", e); }
+    }
+  }, 100);
+}
+
+function stopScan() {
+  if (scanStream) scanStream.getTracks().forEach(function(t) { t.stop(); });
+  if (scanInterval) clearInterval(scanInterval);
+  scanStream = null;
+  scanInterval = null;
+  var sa = document.getElementById("scan-area");
+  var sb = document.getElementById("scan-btn-area");
+  var ss = document.getElementById("scan-status");
+  if (sa) sa.style.display = "none";
+  if (sb) sb.style.display = "block";
+  if (ss) ss.style.display = "none";
+}
+
+function verifikasiKode() {
+  var inputKode = document.getElementById("v-kode").value.trim().toUpperCase();
+  var result = document.getElementById("v-result");
+  var detail = document.getElementById("v-detail");
+  var markWrap = document.getElementById("v-mark-wrap");
+  currentVerifyKode = null;
+  if (!inputKode) {
+    result.className = "verify-result notfound";
+    result.textContent = "Masukkan kode terlebih dahulu.";
+    return;
+  }
+  var btn = document.getElementById("v-btn");
+  btn.textContent = "...";
+  btn.disabled = true;
+  fetch(SCRIPT_URL + "?action=verify&kode=" + encodeURIComponent(inputKode))
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (!d.success) {
+        result.className = "verify-result notfound";
+        result.textContent = "Kode tidak ditemukan dalam database.";
+        detail.classList.remove("show");
+        markWrap.style.display = "none";
+      } else if (d.status === "Sudah Tukar") {
+        result.className = "verify-result used-ok";
+        result.textContent = "Kode ini sudah pernah ditukar sebelumnya.";
+        showDetail(d);
+        markWrap.style.display = "none";
+      } else {
+        result.className = "verify-result found";
+        result.textContent = "VALID! Peserta terdaftar - belum tukar kupon.";
+        showDetail(d);
+        currentVerifyKode = inputKode;
+        markWrap.style.display = "block";
+        vHistory.unshift({ nama: d.nama, kec: d.kec, waktu: new Date().toLocaleTimeString("id-ID") });
+        renderVHistory();
+      }
+    })
+    .catch(function() {
+      result.className = "verify-result notfound";
+      result.textContent = "Gagal terhubung ke server.";
+    })
+    .finally(function() {
+      btn.textContent = "CEK";
+      btn.disabled = false;
+      document.getElementById("v-kode").value = "";
+    });
+}
+
+function showDetail(d) {
+  var el = document.getElementById("v-detail");
+  el.innerHTML =
+    '<div class="v-detail-row"><span>Nama</span><span>' + d.nama + '</span></div>' +
+    '<div class="v-detail-row"><span>Jenis Kelamin</span><span>' + d.jk + '</span></div>' +
+    '<div class="v-detail-row"><span>No. HP</span><span>' + d.hp + '</span></div>' +
+    '<div class="v-detail-row"><span>Kecamatan</span><span>' + d.kec + '</span></div>' +
+    '<div class="v-detail-row"><span>No. Urut</span><span style="font-family:monospace;color:#185fa5">' + d.nomor + '</span></div>' +
+    '<div class="v-detail-row"><span>Status</span><span>' + d.status + '</span></div>';
+  el.classList.add("show");
+}
+
+function markUsed() {
+  if (!currentVerifyKode) return;
+  var btn = document.getElementById("v-mark-wrap").querySelector("button");
+  btn.disabled = true;
+  btn.textContent = "Menyimpan...";
+  fetch(SCRIPT_URL + "?action=mark_used&kode=" + encodeURIComponent(currentVerifyKode))
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.success) {
+        document.getElementById("v-result").className = "verify-result used-ok";
+        document.getElementById("v-result").textContent = "Kupon berhasil ditukar dan dicatat!";
+        document.getElementById("v-mark-wrap").style.display = "none";
+        currentVerifyKode = null;
+      }
+    })
+    .catch(function() { alert("Gagal menyimpan. Coba lagi."); })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = "Tandai Sudah Tukar Kupon";
+    });
+}
+
+function renderVHistory() {
+  var el = document.getElementById("v-history");
+  if (!vHistory.length) { el.innerHTML = '<div class="empty-state">Belum ada verifikasi.</div>'; return; }
+  el.innerHTML = vHistory.slice(0, 10).map(function(h) {
+    return '<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #e6f1fb;font-size:12px">' +
+      '<span style="font-weight:600;color:#185fa5">' + h.nama + ' <span style="font-weight:400;color:#378add">(' + h.kec + ')</span></span>' +
+      '<span style="font-family:monospace;color:#85b7eb;font-size:11px">' + h.waktu + '</span></div>';
+  }).join("");
+}
+
+function saveAndTest() {
+  var url = document.getElementById("cfg-url").value.trim();
+  if (!url) { alert("Masukkan URL terlebih dahulu."); return; }
+  var status = document.getElementById("conn-status");
+  status.innerHTML = '<div style="font-size:12px;color:#378add;margin-top:8px">Menguji koneksi...</div>';
+  fetch(url + "?action=stats")
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.success !== undefined) status.innerHTML = '<div class="conn-ok">Terhubung ke Google Sheets!</div>';
+      else throw new Error();
+    })
+    .catch(function() {
+      status.innerHTML = '<div class="conn-fail">Gagal terhubung. Periksa URL.</div>';
+    });
+}
+
+function applySettings() {
+  function g(id) { return document.getElementById(id); }
+  if (g("cfg-name") && g("cfg-name").value) CFG.name = g("cfg-name").value;
+  if (g("cfg-org") && g("cfg-org").value) CFG.org = g("cfg-org").value;
+  if (g("cfg-date") && g("cfg-date").value) CFG.date = g("cfg-date").value;
+  if (g("cfg-time") && g("cfg-time").value) CFG.time = g("cfg-time").value;
+  if (g("cfg-loc") && g("cfg-loc").value) CFG.loc = g("cfg-loc").value;
+  if (g("cfg-kuota") && g("cfg-kuota").value) CFG.kuota = parseInt(g("cfg-kuota").value);
+  if (g("cfg-prefix") && g("cfg-prefix").value) CFG.prefix = g("cfg-prefix").value.toUpperCase().slice(0, 4);
+  g("ev-name-hero").textContent = CFG.name;
+  g("ev-org-hero").textContent = CFG.org;
+  g("ev-date-hero").textContent = formatDate(CFG.date);
+  g("ev-time-hero").textContent = CFG.time + " WITA";
+  g("ev-loc-hero").textContent = CFG.loc;
+  g("s-kuota").textContent = CFG.kuota.toLocaleString("id-ID");
+}
+
+function saveAllSettings() {
+  applySettings();
+  alert("Pengaturan berhasil disimpan!");
+}
+
+function resetSettings() {
+  CFG = { name: "Jalan Sehat Hardiknas 2026", org: "Dinas Pendidikan Kabupaten Sinjai", date: "2025-05-09", time: "06:00", loc: "Alun-Alun Sinjai", kuota: 10000, prefix: "HDS" };
+  document.getElementById("cfg-name").value = CFG.name;
+  document.getElementById("cfg-org").value = CFG.org;
+  document.getElementById("cfg-date").value = CFG.date;
+  document.getElementById("cfg-time").value = CFG.time;
+  document.getElementById("cfg-loc").value = CFG.loc;
+  document.getElementById("cfg-kuota").value = CFG.kuota;
+  document.getElementById("cfg-prefix").value = CFG.prefix;
+  applySettings();
+}
+
+function formatDate(d) {
+  if (!d) return "-";
+  return new Date(d + "T00:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+}
+
+function cetakTiket() {
+  var kode = document.getElementById("t-kode").textContent;
+  var nama = document.getElementById("t-nama").textContent;
+  var hp = document.getElementById("t-hp").textContent;
+  var jk = document.getElementById("t-jk").textContent;
+  var kec = document.getElementById("t-kec").textContent;
+  var usia = document.getElementById("t-usia").textContent;
+  var nomor = document.getElementById("t-nomor").textContent;
+  var waktu = document.getElementById("t-waktu").textContent;
+  var evname = document.getElementById("t-evname").textContent;
+  var evinfo = document.getElementById("t-evinfo").textContent;
+  var qrImg = document.querySelector("#qr-container img");
+  var qrSrc = qrImg ? qrImg.src : "";
+  var html = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Tiket - " + nama + "</title>" +
+    "<style>body{font-family:Arial,sans-serif;margin:0;padding:24px;background:#f0f5fb}" +
+    ".t{max-width:560px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;border:1px solid #b5d4f4}" +
+    ".th{background:linear-gradient(135deg,#185fa5,#378add);padding:18px 22px;display:flex;justify-content:space-between;align-items:center}" +
+    ".th h2{color:#fff;margin:0 0 4px;font-size:16px}.th p{color:rgba(255,255,255,.82);margin:0;font-size:12px}" +
+    ".tbg{background:rgba(255,255,255,.22);color:#fff;font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.4)}" +
+    ".dash{border-top:2px dashed #b5d4f4;margin:0 16px}" +
+    ".tb{padding:18px 22px;display:flex;gap:18px;align-items:flex-start}" +
+    ".tg{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}" +
+    ".tfl label{font-size:10px;font-weight:700;text-transform:uppercase;color:#378add;display:block;margin-bottom:3px}" +
+    ".tfl p{font-size:13px;font-weight:600;color:#1a1a2e;margin:0}" +
+    ".tq{text-align:center;border-left:2px dashed #b5d4f4;padding-left:18px;flex-shrink:0}" +
+    ".kp{font-family:monospace;font-size:10px;font-weight:700;background:#e6f1fb;color:#0c447c;padding:4px 8px;border-radius:6px;display:inline-block;margin-top:5px}" +
+    ".tf{background:#e6f1fb;padding:10px 22px;font-size:11px;color:#378add;display:flex;justify-content:space-between}" +
+    "@media print{body{background:#fff;padding:0}}</style></head>" +
+    "<body><div class='t'>" +
+    "<div class='th'><div><h2>" + evname + "</h2><p>" + evinfo + "</p></div><div class='tbg'>TERDAFTAR</div></div>" +
+    "<div class='dash'></div>" +
+    "<div class='tb'><div class='tg'>" +
+    "<div class='tfl'><label>Nama</label><p>" + nama + "</p></div>" +
+    "<div class='tfl'><label>Jenis Kelamin</label><p>" + jk + "</p></div>" +
+    "<div class='tfl'><label>No. HP</label><p>" + hp + "</p></div>" +
+    "<div class='tfl'><label>Kecamatan</label><p>" + kec + "</p></div>" +
+    "<div class='tfl'><label>Usia</label><p>" + usia + "</p></div>" +
+    "<div class='tfl'><label>No. Urut</label><p style='color:#185fa5;font-family:monospace;font-size:12px;font-weight:700'>" + nomor + "</p></div>" +
+    "</div><div class='tq'><p style='font-size:10px;font-weight:700;text-transform:uppercase;color:#378add;margin-bottom:7px'>QR Code</p>" +
+    "<img src='" + qrSrc + "' width='100' height='100' style='display:block;margin:0 auto 8px;border:1px solid #b5d4f4;border-radius:6px'>" +
+    "<div class='kp'>" + kode + "</div></div></div>" +
+    "<div class='tf'><span>Tunjukkan ke Panitia untuk kupon undian</span><span>" + waktu + "</span></div>" +
+    "</div><script>window.onload=function(){window.print();}<" + "/script></body></html>";
+  var w = window.open("", "_blank");
+  if (w) { w.document.write(html); w.document.close(); }
+  else alert("Izinkan pop-up untuk mencetak tiket.");
+}
+
+function bagikanWA() {
+  var kode = document.getElementById("t-kode").textContent;
+  var nama = document.getElementById("t-nama").textContent;
+  var nomor = document.getElementById("t-nomor").textContent;
+  var kec = document.getElementById("t-kec").textContent;
+  var msg = "Tiket " + CFG.name + "\n\n" +
+    "Nama : " + nama + "\n" +
+    "Kecamatan : " + kec + "\n" +
+    "No. Urut : " + nomor + "\n" +
+    "Kode Unik : " + kode + "\n\n" +
+    "Tunjukkan kode ini ke panitia untuk kupon undian berhadiah.\n" +
+    CFG.name + " | " + CFG.loc;
+  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+}
+</script>
+</body>
+</html>
